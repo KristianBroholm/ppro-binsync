@@ -160,8 +160,23 @@ $._ext_PPRO = {
             current = current.parent;
         }
         return path.join('/');
+    },
+
+    /**
+     * Returns the parent directory of the current project file.
+     */
+    getProjectParentPath: function() {
+        if (!app.project || !app.project.path || app.project.path === "") {
+            return "null";
+        }
+        var projFile = new File(app.project.path);
+        if (projFile.parent) {
+            return projFile.parent.fsName;
+        }
+        return "null";
     }
 };
+
 
 /**
  * Global listener for project item additions.

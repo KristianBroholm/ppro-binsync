@@ -171,14 +171,34 @@ function ensureHostLoaded(callback) {
                     callback(false);
                 } else {
                     log("Host script loaded manually.", "success");
+                    setDefaultWatchPath();
                     callback(true);
                 }
             });
         } else {
+            setDefaultWatchPath();
             callback(true);
         }
     });
 }
+
+/**
+ * Automatically sets the default watch folder to the project's parent directory.
+ */
+function setDefaultWatchPath() {
+    csInterface.evalScript('$._ext_PPRO.getProjectParentPath()', (result) => {
+        if (result && result !== "null" && result !== "EvalScript error.") {
+            // Only set if not already manually set in this session
+            if (!watchFolder) {
+                watchFolder = result;
+                statusText.textContent = `Watching: ${watchFolder}`;
+                btnToggle.disabled = false;
+                log(`Default path set: ${watchFolder}`);
+            }
+        }
+    });
+}
+
 
 // RELOAD PANEL
 btnReload.addEventListener('click', () => {
