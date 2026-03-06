@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>BinSync</title>
+    <style>
+        :root {
+            --bg-color: #2b2b2b;
+            --text-color: #eee;
+            --accent-color: #0078d4;
+            --error-color: #e81123;
+        }
+        html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; }
+        .container { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+            height: 100vh; 
+            padding: 15px; 
+            box-sizing: border-box; 
+        }
+        .toolbar { display: flex; gap: 5px; flex-wrap: wrap; }
+        button { 
+            cursor: pointer; padding: 6px 12px; background: #444; color: white; 
+            border: 1px solid #666; border-radius: 2px; font-size: 12px;
+        }
+        button:hover { background: #555; }
+        button:disabled { opacity: 0.4; cursor: default; }
+        button.active { background: var(--accent-color); border-color: #005a9e; }
+        button.secondary { background: #333; }
+        
+        .status { font-size: 11px; color: #aaa; padding: 5px; background: #222; border-radius: 2px; }
+        .log { 
+            background: #1a1a1a; padding: 8px; font-family: 'Courier New', monospace; 
+            font-size: 11px; flex: 1; min-height: 0; overflow-y: auto; border: 1px solid #333;
+            display: flex; flex-direction: column;
+        }
+        .log div { margin-bottom: 2px; padding-bottom: 2px; border-bottom: 1px solid #252525; word-break: break-all; }
+        .log .error { color: var(--error-color); }
+        .log .success { color: #107c10; }
+
+        /* Premiere Pro style scrollbar */
+        .log::-webkit-scrollbar {
+            width: 10px;
+            background-color: #1a1a1a;
+        }
+        .log::-webkit-scrollbar-track {
+            background-color: #1a1a1a;
+        }
+        .log::-webkit-scrollbar-thumb {
+            background-color: #3e3e3e;
+            border: 2px solid #1a1a1a;
+            border-radius: 5px;
+        }
+        .log::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="toolbar">
+            <button id="btn-select">1. Select Folder</button>
+            <button id="btn-toggle" disabled>2. Start Watching</button>
+            <button id="btn-test" class="secondary">Test Link</button>
+            <button id="btn-reload" class="secondary">Reload Panel</button>
+        </div>
+
+        <div style="padding: 0 5px; font-size: 11px; display: flex; align-items: center; gap: 5px;">
+            <input type="checkbox" id="chk-auto-copy" checked>
+            <label for="chk-auto-copy">Auto-copy new imports to watch folder</label>
+        </div>
+
+        <div class="status" id="id-status-text">No folder selected.</div>
+
+        
+        <div class="log" id="log-container">
+            <div>Panel initialized. Waiting for action...</div>
+        </div>
+    </div>
+
+    <script src="CSInterface.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
